@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BookCartDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("BaseConnection")));
+builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
 
 var app = builder.Build();
 

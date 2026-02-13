@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="BookCart.Data/BookCart.Data.csproj" Id="8e565f01-780d-48b9-ba38-8b4fdfa086ef" />
+  <Project Path="BookCart.Services/BookCart.Services.csproj" Id="ffe97ea8-44be-451a-9019-43080ec509ef" />
   <Project Path="BookCartWeb/BookCartWeb.csproj" />
 </Solution>
