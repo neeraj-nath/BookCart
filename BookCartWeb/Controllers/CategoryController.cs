@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookCart.Data.Entities;
+using BookCart.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BookCartWeb.Controllers;
 
-public class CategoryController : Controller
+public class CategoryController(ICategoryService service) : Controller
 {
+    private readonly ICategoryService _service = service;
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index(CancellationToken ct)
     {
-        return View();
+        IReadOnlyList<Category> getCategories = await _service.GetAll(ct);
+        return View(getCategories);
     }
 }

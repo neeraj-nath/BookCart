@@ -14,7 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookCart.Data\BookCart.Data.csproj" />
+    <ProjectReference Include="..\BookCart.Services\BookCart.Services.csproj" />
   </ItemGroup>
+
+  <!--<ItemGroup>
+    <ProjectReference Include="..\BookCart.Data\BookCart.Data.csproj" />
+  </ItemGroup>-->
 
 </Project>

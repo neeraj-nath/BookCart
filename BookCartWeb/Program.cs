@@ -5,13 +5,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using BookCart.Data.Context;
+using BookCart.Data.Repo;
+using BookCart.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<BookCartDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("BaseConnection")));
 builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
+//DI Generic Repo:
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //Open Generic Registration;
+
+//DI Service Layers:
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+
+builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
