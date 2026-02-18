@@ -1,11 +1,11 @@
-﻿using BookCart.Data.Entities;
+﻿using BookCart.Services.Models;
 
 namespace BookCart.Services;
 
 public interface ICategoryService
 {
-    Task<IReadOnlyList<Category>> GetAll(CancellationToken ct);
+    Task<IReadOnlyList<CategoryModel>> GetAll(CancellationToken ct);
 
-    Task<Category?> GetById(int id, CancellationToken ct);
+    Task<CategoryModel?> GetById(int id, CancellationToken ct);
 
 }
