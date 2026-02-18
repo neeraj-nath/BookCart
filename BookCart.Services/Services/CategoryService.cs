@@ -1,9 +1,14 @@
-﻿using BookCart.Data.Entities;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+using BookCart.Data.Entities;
 using BookCart.Data.Repo;
 using BookCart.Services.Extensions;
+using BookCart.Services.Interfaces;
 using BookCart.Services.Models;
 
-namespace BookCart.Services;
+namespace BookCart.Services.Services;
 
 public class CategoryService(IRepository<Category> repo) : ICategoryService
 {

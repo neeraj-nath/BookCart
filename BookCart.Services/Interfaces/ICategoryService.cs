@@ -1,6 +1,10 @@
-﻿using BookCart.Services.Models;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace BookCart.Services;
+using BookCart.Services.Models;
+
+namespace BookCart.Services.Interfaces;
 
 public interface ICategoryService
 {

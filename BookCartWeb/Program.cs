@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 
 using BookCart.Data.Context;
 using BookCart.Data.Repo;
-using BookCart.Services;
+using BookCart.Services.Services;
+using BookCart.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
