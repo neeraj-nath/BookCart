@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BookCart.Data\BookCart.Data.csproj" />
-    <ProjectReference Include="..\BookCart.Utilities\BookCart.Utilities.csproj" />
-  </ItemGroup>
-
 </Project>

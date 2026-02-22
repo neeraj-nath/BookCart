@@ -27,6 +27,12 @@ public class CategoryController(ICategoryService service) : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CategoryModel model, CancellationToken ct)
     {
+        //Better to integrate custom validations directly to the model via custom validation attributes. Prefer on SRP for the controller
+        //if (int.TryParse(model.Name, out int _))
+        //{
+        //    ModelState.AddModelError(nameof(model.Name), "Name cannot be a numeric value");
+        //}
+
         if (!ModelState.IsValid) return View();
 
         _ = await _service.Create(model, ct);
