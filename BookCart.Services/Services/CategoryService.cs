@@ -10,9 +10,19 @@ using BookCart.Services.Models;
 
 namespace BookCart.Services.Services;
 
-public class CategoryService(IRepository<Category> repo) : ICategoryService
+public class CategoryService(IUnitOfWork work) : ICategoryService
 {
-    private readonly IRepository<Category> _repo = repo;
+    //private readonly IRepository<Category> _repo = repo;
+    private readonly IUnitOfWork _work = work;
+    private readonly IRepository<Category> _repo = work.Repository<Category>();
+
+    public async Task<int> Create(CategoryModel model, CancellationToken ct)
+    {
+        Category entity = new(){ Name = model.Name, DisplayOrder = model.DisplayOrder };
+
+        await _repo.Create(entity, ct);
+        return await _work.SaveAsync(ct);
+    }
 
     public async Task<IReadOnlyList<CategoryModel>> GetAll(CancellationToken ct)
     {

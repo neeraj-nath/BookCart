@@ -20,6 +20,7 @@ builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //Open Generic Registration;
 
 //DI Service Layers:
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 

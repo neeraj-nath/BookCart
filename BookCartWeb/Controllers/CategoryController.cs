@@ -23,4 +23,14 @@ public class CategoryController(ICategoryService service) : Controller
     {
         return View();
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CategoryModel model, CancellationToken ct)
+    {
+        if (!ModelState.IsValid) return View();
+
+        _ = await _service.Create(model, ct);
+
+        return RedirectToAction(nameof(Index));
+    }
 }

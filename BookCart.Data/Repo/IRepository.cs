@@ -7,6 +7,8 @@ namespace BookCart.Data.Repo;
 
 public interface IRepository<T>
 {
+    Task Create(T entity, CancellationToken ct);
+
     Task<IReadOnlyList<T>> GetAllAsync(CancellationToken ct);
 
     Task<T?> GetByIdAsync(int id, CancellationToken ct);

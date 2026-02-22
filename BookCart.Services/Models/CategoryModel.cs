@@ -7,5 +7,5 @@ public class CategoryModel
     public required string Name { get; set; }
 
     [DisplayName("Display Order")]
-    public int DisplayOrder { get; set; }
+    public required int DisplayOrder { get; set; }
 }
