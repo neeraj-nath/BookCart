@@ -24,6 +24,16 @@ public class CategoryService(IUnitOfWork work) : ICategoryService
         return await _work.SaveAsync(ct);
     }
 
+    public async Task<int> Update(CategoryModel model, CancellationToken ct)
+    {
+        Category entity = await _repo.GetByIdAsync(model.Id, ct) ?? throw new KeyNotFoundException($"Category with Id:{model.Id} not found");
+
+        entity.Name = model.Name;
+        entity.DisplayOrder = model.DisplayOrder;
+
+        return await _work.SaveAsync(ct);
+    }
+
     public async Task<IReadOnlyList<CategoryModel>> GetAll(CancellationToken ct)
     {
         var entities = await _repo.GetAllAsync(ct);

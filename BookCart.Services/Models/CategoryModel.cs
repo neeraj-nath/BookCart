@@ -7,6 +7,8 @@ namespace BookCart.Services.Models;
 
 public class CategoryModel
 {
+    public int Id { get; init; }
+
     [MaxLength(30)]
     [NotInteger]
     public required string Name { get; set; }

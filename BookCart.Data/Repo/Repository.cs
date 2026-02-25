@@ -21,6 +21,14 @@ public class Repository<T>(BookCartDbContext context) : IRepository<T> where T :
         await _dbSet.AddAsync(entity, ct);
     }
 
+    [Obsolete("This method attaches the entire entity as modified. Therefore is not a safe way to update. Instead we should load + modify + save entity")]
+    public async Task Update(T entity, CancellationToken _)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
+
+        _dbSet.Update(entity);
+    }
+
     public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken ct)
     {
         return await _dbSet.AsNoTracking().ToListAsync(ct);

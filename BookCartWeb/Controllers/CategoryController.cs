@@ -39,4 +39,24 @@ public class CategoryController(ICategoryService service) : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Edit(int id, CancellationToken ct)
+    {
+        var model = await _service.GetById(id, ct);
+        if (model is null)
+        {
+            return NotFound();
+        }
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(CategoryModel model, CancellationToken ct)
+    {
+        if (!ModelState.IsValid) return View();
+
+        _ = await _service.Update(model, ct);
+
+        return RedirectToAction(nameof(Index));
+    }
 }
