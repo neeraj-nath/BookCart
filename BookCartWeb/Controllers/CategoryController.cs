@@ -36,7 +36,7 @@ public class CategoryController(ICategoryService service) : Controller
         if (!ModelState.IsValid) return View();
 
         _ = await _service.Create(model, ct);
-
+        TempData["success"] = "Category Created Successfully!"; 
         return RedirectToAction(nameof(Index));
     }
 
@@ -56,7 +56,7 @@ public class CategoryController(ICategoryService service) : Controller
         if (!ModelState.IsValid) return View();
 
         _ = await _service.Update(model, ct);
-
+        TempData["success"] = "Category Updated Successfully!"; 
         return RedirectToAction(nameof(Index));
     }
 
@@ -76,7 +76,7 @@ public class CategoryController(ICategoryService service) : Controller
     {
 
         await _service.Delete(id, ct);
-
+        TempData["success"] = "Category Deleted Successfully!"; 
         return RedirectToAction(nameof(Index));
     }
 }
