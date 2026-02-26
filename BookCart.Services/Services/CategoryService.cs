@@ -34,6 +34,15 @@ public class CategoryService(IUnitOfWork work) : ICategoryService
         return await _work.SaveAsync(ct);
     }
 
+    public async Task<int> Delete(int id, CancellationToken ct)
+    {
+        Category? entityToDelete = await _repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException($"Category with Id:{id} not found"); ;
+
+        _repo.Delete(entityToDelete, ct);
+
+        return await _work.SaveAsync(ct);
+    }
+
     public async Task<IReadOnlyList<CategoryModel>> GetAll(CancellationToken ct)
     {
         var entities = await _repo.GetAllAsync(ct);

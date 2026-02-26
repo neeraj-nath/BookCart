@@ -29,6 +29,12 @@ public class Repository<T>(BookCartDbContext context) : IRepository<T> where T :
         _dbSet.Update(entity);
     }
 
+    public void Delete(T entity, CancellationToken ct)
+    {
+        ArgumentNullException.ThrowIfNull(entity);
+        _dbSet.Remove(entity);
+    }
+
     public async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken ct)
     {
         return await _dbSet.AsNoTracking().ToListAsync(ct);

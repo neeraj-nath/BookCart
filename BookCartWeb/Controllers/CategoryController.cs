@@ -59,4 +59,24 @@ public class CategoryController(ICategoryService service) : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Delete(int id, CancellationToken ct)
+    {
+        var model = await _service.GetById(id, ct);
+        if (model is null)
+        {
+            return NotFound();
+        }
+        return View(model);
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Delete))]
+    public async Task<IActionResult> Delete_Post(int id, CancellationToken ct)
+    {
+
+        await _service.Delete(id, ct);
+
+        return RedirectToAction(nameof(Index));
+    }
 }

@@ -10,6 +10,7 @@ public interface ICategoryService
 {
     Task<int> Create(CategoryModel model, CancellationToken ct);
     Task<int> Update(CategoryModel model, CancellationToken ct);
+    Task<int> Delete(int id, CancellationToken ct);
     Task<IReadOnlyList<CategoryModel>> GetAll(CancellationToken ct);
 
     Task<CategoryModel?> GetById(int id, CancellationToken ct);
