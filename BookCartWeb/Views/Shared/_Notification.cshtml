@@ -1,7 +1,11 @@
 @if (TempData["success"] != null){
-    <h3 class="text-success">@TempData["success"]</h3>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+    </script>
 }
 @if (TempData["error"] != null){
-    <h3 class="text-warning">@TempData["error"]</h3>
+    <script type="text/javascript">
+        toastr.error('@TempData["error"]');
+    </script>
 }
 
