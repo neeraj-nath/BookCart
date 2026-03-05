@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using BookCart.Services.Interfaces;
 using BookCart.Services.Models;
+using BookCart.Utilities.CustomExceptions;
 
 namespace BookCartWeb.Controllers;
 
@@ -34,10 +35,18 @@ public class CategoryController(ICategoryService service) : Controller
         //}
 
         if (!ModelState.IsValid) return View();
-
-        _ = await _service.Create(model, ct);
-        TempData["success"] = "Category Created Successfully!"; 
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            _ = await _service.Create(model, ct);
+            TempData["success"] = "Category Created Successfully!";
+            return RedirectToAction(nameof(Index));
+        }
+        catch (DuplicateEntityException ex)
+        {
+            //ModelState.AddModelError(nameof(model.Name), ex.Message);
+            TempData["error"] = ex.Message;
+            return View(model);
+        }
     }
 
     public async Task<IActionResult> Edit(int id, CancellationToken ct)

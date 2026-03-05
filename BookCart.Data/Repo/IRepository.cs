@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ public interface IRepository<T>
     void Delete(T entity, CancellationToken ct);
 
     Task<IReadOnlyList<T>> GetAllAsync(CancellationToken ct);
+
+    Task<T?> Get(Expression<Func<T,bool>> expression, CancellationToken ct);
 
     Task<T?> GetByIdAsync(int id, CancellationToken ct);
 

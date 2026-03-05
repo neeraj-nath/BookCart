@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using BookCart.Data.Entities;
 using BookCart.Data.Repo;
 using BookCart.Services.Extensions;
 using BookCart.Services.Interfaces;
 using BookCart.Services.Models;
+using BookCart.Utilities.CustomExceptions;
 
 namespace BookCart.Services.Services;
 
@@ -18,6 +19,13 @@ public class CategoryService(IUnitOfWork work) : ICategoryService
 
     public async Task<int> Create(CategoryModel model, CancellationToken ct)
     {
+        CategoryModel? exists = await GetByName(model.Name, ct);
+
+        if(exists is not null)
+        {
+            throw new DuplicateEntityException($"Category '{exists.Name}' already exists.");
+        }
+
         Category entity = new(){ Name = model.Name, DisplayOrder = model.DisplayOrder };
 
         await _repo.Create(entity, ct);
@@ -52,6 +60,12 @@ public class CategoryService(IUnitOfWork work) : ICategoryService
     public async Task<CategoryModel?> GetById(int id, CancellationToken ct)
     {
         var entity = await _repo.GetByIdAsync(id, ct);
+        return entity?.ToModel();
+    }
+
+    public async Task<CategoryModel?> GetByName(string name, CancellationToken ct)
+    {
+        var entity = await _repo.Get(c=> c.Name == name, ct);
         return entity?.ToModel();
     }
 }

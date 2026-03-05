@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -50,4 +51,9 @@ public class Repository<T>(BookCartDbContext context) : IRepository<T> where T :
         return _dbSet.AsNoTracking();
     }
 
+    public async Task<T?> Get(Expression<Func<T,bool>> expression, CancellationToken ct)
+    {
+        //return await _dbSet.Where(expression).FirstOrDefaultAsync(ct);
+        return await _dbSet.FirstOrDefaultAsync(expression, ct);
+    }
 }
