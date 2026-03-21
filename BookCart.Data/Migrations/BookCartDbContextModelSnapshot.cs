@@ -34,11 +34,20 @@ namespace BookCart.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_Categories");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Categories_Name");
+
+                    b.ToTable("Categories", "books", t =>
+                        {
+                            t.HasCheckConstraint("CK_Categories_DisplayOrder", "DisplayOrder>0");
+                        });
 
                     b.HasData(
                         new

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookCart.Data.Migrations
 {
     [DbContext(typeof(BookCartDbContext))]
-    [Migration("20260212044159_FirstSetup")]
-    partial class FirstSetup
+    [Migration("20260321074434_UniqueConstraintForCategoryName")]
+    partial class UniqueConstraintForCategoryName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,11 +37,40 @@ namespace BookCart.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PK_Categories");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_Categories_Name");
+
+                    b.ToTable("Categories", "books", t =>
+                        {
+                            t.HasCheckConstraint("CK_Categories_DisplayOrder", "DisplayOrder>0");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisplayOrder = 1,
+                            Name = "Action"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DisplayOrder = 2,
+                            Name = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DisplayOrder = 3,
+                            Name = "Horror"
+                        });
                 });
 #pragma warning restore 612, 618
         }

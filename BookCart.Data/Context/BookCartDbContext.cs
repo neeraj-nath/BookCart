@@ -13,7 +13,21 @@ public class BookCartDbContext(DbContextOptions<BookCartDbContext> options) : Db
         base.OnModelCreating(builder);
 
         // Model Configuration:
-        builder.Entity<Category>().HasKey(c => c.Id);
+        //builder.Entity<Category>().HasKey(c => c.Id);
+        builder.Entity<Category>(category =>
+        {
+            category.ToTable("Categories", "books",
+                c => c.HasCheckConstraint("CK_Categories_DisplayOrder", "DisplayOrder>0")
+            );
+
+            category.HasKey(c => c.Id).HasName("PK_Categories");
+
+            category.Property(c => c.Name).IsRequired().HasMaxLength(30);
+
+            category.HasIndex(c => c.Name).IsUnique().HasDatabaseName("UQ_Categories_Name");
+
+            category.Property(c => c.DisplayOrder).IsRequired();
+        });
 
 
 

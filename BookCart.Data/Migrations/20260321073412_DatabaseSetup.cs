@@ -2,26 +2,44 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BookCart.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstSetup : Migration
+    public partial class DatabaseSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "books");
+
             migrationBuilder.CreateTable(
                 name: "Categories",
+                schema: "books",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.CheckConstraint("CK_Categories_DisplayOrder", "DisplayOrder>0");
+                });
+
+            migrationBuilder.InsertData(
+                schema: "books",
+                table: "Categories",
+                columns: new[] { "Id", "DisplayOrder", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Action" },
+                    { 2, 2, "Thriller" },
+                    { 3, 3, "Horror" }
                 });
         }
 
@@ -29,7 +47,8 @@ namespace BookCart.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Categories",
+                schema: "books");
         }
     }
 }
