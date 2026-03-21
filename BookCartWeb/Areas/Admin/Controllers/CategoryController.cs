@@ -8,8 +8,9 @@ using BookCart.Services.Interfaces;
 using BookCart.Services.Models;
 using BookCart.Utilities.CustomExceptions;
 
-namespace BookCartWeb.Controllers;
+namespace BookCartWeb.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class CategoryController(ICategoryService service) : Controller
 {
     private readonly ICategoryService _service = service;

@@ -1,12 +1,12 @@
 using System.Diagnostics;
 
 using BookCart.Services.Models;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace BookCartWeb.Controllers;
+namespace BookCartWeb.Areas.Customer.Controllers;
 
+[Area("Customer")]
 public class HomeController(ILogger<HomeController> logger) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
